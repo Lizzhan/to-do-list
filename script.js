@@ -10,6 +10,10 @@ class List{
         })
     }
 
+    get fullList(){
+        return this.tasks;
+    }
+
     get listName(){
         return this.name;
     }
@@ -34,12 +38,24 @@ class Task{
     constructor(name){
         this.name = name;
         this.todos = [];
+        this.priority = false;
     }
 
-    set taskName(name){
+    set setName(name){
         this.name = name;
     }
 
+    setTaskAsPriority(){
+        this.priority = true;
+    }
+
+    get getToDos(){
+        return this.todos;
+    }
+
+    get taskName(){
+        return this.name;
+    }
     get taskOverview(){
         console.log(this.todos);
     }
@@ -60,22 +76,13 @@ const newTaskInput = document.querySelector('#new-task-input');
 const addNewTaskButton = document.querySelector('#add-new-task');
 const listShowCase = document.querySelector('#list-showcase');
 
-function showNewTaskInput(){
-    newButton.addEventListener('click',()=>newTask.setAttribute('style','display:contents'));
-}
-
-function hideInput(){
-    newTask.setAttribute('style','display:none');
-}
-
-//Create indivisual Task objects and add them to the List object
 let placeholder = "";
+let switchOne = true;
 
-function deleteElementByClass(className){
-    const elements = document.querySelector(className);
-    while(elements.length>0){
-        elements[0].parentNode.removeChild(elements[0]);
-    }
+function showNewTaskInput(){
+    newButton.addEventListener('click',()=>{
+        resetTaskDisplay();
+        newTask.setAttribute('style','display:contents')});
 }
 
 function addNewTask(){
@@ -89,35 +96,10 @@ function addNewTask(){
         }
 
         const task = new Task(placeholder);
+        task.addToDos("GayTest1");
         taskList.addTask(task);
 
-        const editButton = document.createElement('button');
-        editButton.classList.add('list-edit-button');
-        editButton.textContent = "Edit";
-    
-        const deleteButton = document.createElement('button');
-        deleteButton.classList.add('list-delete-button');
-        deleteButton.textContent = "Delete";
-    
-        const reUsableTaskContainer = document.createElement('p');
-        reUsableTaskContainer.classList.add('each-task');
-        reUsableTaskContainer.textContent = placeholder;
-        
-        const taskShowCase = document.createElement('div');
-        listShowCase.appendChild(taskShowCase);
-
-        taskShowCase.appendChild(reUsableTaskContainer);
-        taskShowCase.appendChild(editButton);
-        taskShowCase.appendChild(deleteButton);
-
-        deleteButton.addEventListener('click', ()=>{
-            taskList.deleteTask(task);
-            taskList.showList
-            listShowCase.removeChild(taskShowCase);
-
-        }
-        )
-
+        generateListButtons();
         hideInput();
 
         console.log(`${placeholder} added`);
@@ -129,9 +111,179 @@ function addNewTask(){
     })
 }
 
-function displayTaskDetails(){
+function generateListButtons(){
+    const editButton = document.createElement('button');
+    editButton.classList.add('list-edit-button');
+    editButton.textContent = "Edit";
+
+    const deleteButton = document.createElement('button');
+    deleteButton.classList.add('list-delete-button');
+    deleteButton.textContent = "Delete";
+
+    const setPriority = document.createElement('button');
+    setPriority.classList.add('set-priority');
+    setPriority.textContent = "Set This Task as Priority";
+
+    const reUsableTaskContainer = document.createElement('p');
+    reUsableTaskContainer.classList.add('each-task');
+    reUsableTaskContainer.textContent = placeholder;
+    
+    const taskShowCase = document.createElement('div');
+    taskShowCase.classList.add(placeholder);
+
+    taskShowCase.appendChild(setPriority);
+    taskShowCase.appendChild(reUsableTaskContainer);
+    listShowCase.appendChild(taskShowCase);
+
+    listShowCase.addEventListener('click', ()=>{} )
+
+    reUsableTaskContainer.addEventListener('click',()=>{
+        resetTaskDisplay();
+        reUsableTaskContainer.setAttribute('class','selected');
+        taskShowCase.appendChild(editButton);
+        taskShowCase.appendChild(deleteButton);     
+        setPriority.setAttribute('style','display:contents');
+    
+        let task = getSelectedClass();
+        generateAllTaskDisplay(task);       
+
+    })
+
+    setPriority.addEventListener('click',()=>{
+        let task = getSelectedClass();
+        task.setTaskAsPriority();
+        reUsableTaskContainer.classList.add('priority');
+    }
+    );
+
+    editButton.addEventListener('click', ()=>{
+        removeSelectedClass();
+        resetTaskDisplay();
+        });
+
+    deleteButton.addEventListener('click', ()=>{
+        let task = getSelectedClass();
+        taskList.deleteTask(task);
+        taskList.showList
+        listShowCase.removeChild(taskShowCase);
+        resetTaskDisplay();
+    }
+    )
+}
+
+function removeSelectedClass(){
+    const element = document.querySelector(".selected");
+    element.classList.remove('selected');
+}
+
+function generateAllTaskDisplay(task){
+    const addButton = document.createElement('button');
+    addButton.classList.add('add-button');
+    addButton.textContent = "Add Todos";
+
+    const todoForm = document.createElement('form');
+    todoForm.classList.add("todo-form");
+
+    const newInput = document.createElement('input');    
+    newInput.classList.add('add-todo');
+    newInput.setAttribute('type', 'text');
+    newInput.setAttribute('placeholder','Enter New Todos');
+
+    const submitTodoBtn = document.createElement('button');
+    submitTodoBtn.setAttribute('id','submit');
+    submitTodoBtn.textContent = "Enter";
+
+
+    taskDisplay.appendChild(addButton);    
+    taskDisplay.appendChild(todoForm);
+    todoForm.appendChild(newInput);
+    todoForm.appendChild(submitTodoBtn);
+
+    displayEachTaskDetail(task);
+
+
+    submitTodoBtn.addEventListener('click',(e)=>{
+        e.preventDefault();
+        task.addToDos(newInput.value);
+        deleteElementByClass('todos');
+        todoForm.setAttribute('style','display:none');
+        displayEachTaskDetail(task);
+    })
+    
+    addButton.addEventListener('click',()=>{
+      todoForm.setAttribute('style', 'display:contents');
+    })
 
 }
+
+function getSelectedClass(){ 
+    let list = taskList.fullList;
+    let selected = document.querySelector(".selected").textContent;
+    console.log(selected);
+    
+    let target = "value";
+    for(i=0;i<list.length;i++){
+        if(list[i].taskName === selected){
+        console.log(list[i].taskName);
+        target = list[i];
+        }
+    }
+    
+    console.log(target);
+    return target;
+}
+
+
+function displayEachTaskDetail(task){
+    let todos = task.getToDos;
+
+    for(let i = 0; i < todos.length; i++){
+        const container = document.createElement('div');
+        container.classList.add('todos');
+
+        const content = document.createElement('ul');
+        content.textContent = todos[i];
+        
+        const editButton = document.createElement('button');
+        editButton.textContent = "Edit";
+
+        const deleteButton = document.createElement('button');
+        deleteButton.textContent = "Delete";
+
+        taskDisplay.appendChild(container);
+        container.appendChild(content);
+        container.appendChild(editButton);
+        container.appendChild(deleteButton);
+
+        deleteButton.addEventListener('click',()=>{
+
+        })
+    }
+}
+
+//utility functions
+
+function deleteElementByClass(className){
+    const elements = document.getElementsByClassName(className);
+    while(elements.length>0){
+        elements[0].parentNode.removeChild(elements[0]);
+    }
+}
+
+function resetTaskDisplay(){
+    deleteElementByClass('todos');
+    deleteElementByClass('todo-form');
+    deleteElementByClass('add-button');
+    deleteElementByClass('list-edit-button');
+    deleteElementByClass('list-delete-button'); 
+    switchOne = true;
+}
+
+function hideInput(){
+    newTask.setAttribute('style','display:none');
+}
+
+
 
 showNewTaskInput();
 addNewTask();

@@ -32,6 +32,10 @@
     display: inline-block;
 }
 
-#new-task{
+#new-task, .todo-form, .set-priority{
     display: none;
+}
+
+.priority{
+    color: red;
 }
