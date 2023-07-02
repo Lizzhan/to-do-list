@@ -19,3 +19,11 @@ then show that Task object's todos in display-task -- DONE -->
 
 !!think through the entire layout first, before coding. It is difficult, but worth it and much better than wasting time on writing codes that won't get used later. 
 Use a top-down approach: big picktures first, details later
+
+July 7th 2023:
+--To Implement:
+    -make list contenteditballe, text content updated as the name of the Task in the list function
+    -todos delete button functionality
+    -reminder
+    -store data: locally & cloud(?)
+    -default welcome page everytime the user opens the website
