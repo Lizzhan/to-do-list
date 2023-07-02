@@ -32,7 +32,7 @@
     display: inline-block;
 }
 
-#new-task, .todo-form, .set-priority{
+#new-task, .todo-form, .set-priority, .confirm-button{
     display: none;
 }
 

@@ -129,9 +129,8 @@ function generateListButtons(){
     reUsableTaskContainer.textContent = placeholder;
     
     const taskShowCase = document.createElement('div');
-    taskShowCase.classList.add(placeholder);
+    taskShowCase.classList.add("task-showcase");
 
-    taskShowCase.appendChild(setPriority);
     taskShowCase.appendChild(reUsableTaskContainer);
     listShowCase.appendChild(taskShowCase);
 
@@ -142,11 +141,10 @@ function generateListButtons(){
         reUsableTaskContainer.setAttribute('class','selected');
         taskShowCase.appendChild(editButton);
         taskShowCase.appendChild(deleteButton);     
+        taskShowCase.appendChild(setPriority);
         setPriority.setAttribute('style','display:contents');
-    
         let task = getSelectedClass();
         generateAllTaskDisplay(task);       
-
     })
 
     setPriority.addEventListener('click',()=>{
@@ -159,6 +157,9 @@ function generateListButtons(){
     editButton.addEventListener('click', ()=>{
         removeSelectedClass();
         resetTaskDisplay();
+        //make reusableTaskContainer "contenteditable='true'"
+        //update the object's name, and the display
+        //maybe add "double click"(??) event listener to the reusableTaskContainer/
         });
 
     deleteButton.addEventListener('click', ()=>{
@@ -207,6 +208,7 @@ function generateAllTaskDisplay(task){
         task.addToDos(newInput.value);
         deleteElementByClass('todos');
         todoForm.setAttribute('style','display:none');
+        newInput.value = "";
         displayEachTaskDetail(task);
     })
     
@@ -250,13 +252,32 @@ function displayEachTaskDetail(task){
         const deleteButton = document.createElement('button');
         deleteButton.textContent = "Delete";
 
+        const confirmChangeButton = document.createElement('button');
+        confirmChangeButton.classList.add('confirm-button');
+        confirmChangeButton.textContent = "confirm";
         taskDisplay.appendChild(container);
         container.appendChild(content);
+        container.appendChild(confirmChangeButton);
         container.appendChild(editButton);
         container.appendChild(deleteButton);
 
-        deleteButton.addEventListener('click',()=>{
+        editButton.addEventListener('click',()=>{
+            //make element "contenteditable='true'"
+            //update the value in array. Make it equal to the newly edited content
+            //this event listener should be put on the content element here, or not
+            //by clicking, a button will show up
+            //the button will update the value in the array.
+            content.setAttribute('contenteditable','true');
+            confirmChangeButton.setAttribute('style','display:contents');
+        });
 
+        confirmChangeButton.addEventListener('click',()=>{
+            todos[i] = content.textContent
+        })
+
+        deleteButton.addEventListener('click',()=>{
+            todos.splice(i,1);
+            taskDisplay.removeChild(container);
         })
     }
 }
@@ -276,6 +297,7 @@ function resetTaskDisplay(){
     deleteElementByClass('add-button');
     deleteElementByClass('list-edit-button');
     deleteElementByClass('list-delete-button'); 
+    deleteElementByClass('set-priority');
     switchOne = true;
 }
 

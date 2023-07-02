@@ -9,7 +9,7 @@
     a. Add, remove task DONE
     b. edit task content 
     c. set priority
-    d. reminder
+    d. reminder - realtime countdown. Set a date and time where the task is due. Everytime the 
     e. when click on individual tasks in the list page, the content of the task will appear 
     f. due date reminder everytime the user opens the page
 
