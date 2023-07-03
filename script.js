@@ -25,10 +25,7 @@ class List{
     deleteTask(task){
         this.tasks = this.tasks.filter(item => item !== task);
     }
-    
-    setTaskAsPriority(){
 
-    }
 }
 
 let taskList = new List('tasklist');
@@ -80,6 +77,8 @@ const resetButton = document.querySelector('#reset-button');
 let placeholder = "";
 let switchOne = true;
 
+let indexInList = '';
+
 function showNewTaskInput(){
     newButton.addEventListener('click',()=>{
         resetTaskDisplay();
@@ -104,9 +103,9 @@ function addNewTask(){
             return;
         }
 
-        const task = new Task(placeholder);
-        task.addToDos("GayTest1");
-        taskList.addTask(task);
+        const newTask = new Task(placeholder);
+        newTask.addToDos("GayTest1");
+        taskList.addTask(newTask);
 
         generateListButtons();
         hideInput();
@@ -129,6 +128,10 @@ function generateListButtons(){
     deleteButton.classList.add('list-delete-button');
     deleteButton.textContent = "Delete";
 
+    const confirmButton = document.createElement('button');
+    confirmButton.textContent = "confirm"; 
+    confirmButton.classList.add('confirm-button');
+
     const setPriority = document.createElement('button');
     setPriority.classList.add('set-priority');
     setPriority.textContent = "Set This Task as Priority";
@@ -141,38 +144,51 @@ function generateListButtons(){
     taskShowCase.classList.add("task-showcase");
 
     taskShowCase.appendChild(reUsableTaskContainer);
+    taskShowCase.appendChild(confirmButton);
     listShowCase.appendChild(taskShowCase);
 
-    listShowCase.addEventListener('click', ()=>{} )
+    let list = taskList.fullList;
 
     reUsableTaskContainer.addEventListener('click',()=>{
-        resetTaskDisplay();
-        reUsableTaskContainer.setAttribute('class','selected');
+        resetTaskDisplay();        
         taskShowCase.appendChild(editButton);
         taskShowCase.appendChild(deleteButton);     
         taskShowCase.appendChild(setPriority);
         setPriority.setAttribute('style','display:contents');
-        let task = getSelectedClass();
-        generateAllTaskDisplay(task);       
+
+        reUsableTaskContainer.setAttribute('class','selected');
+        getIndexOfSelectedClass();
+        console.log(indexInList);
+        console.log(list[indexInList]);
+        
+        generateAllTaskDisplay(list[indexInList]);       
     })
 
     setPriority.addEventListener('click',()=>{
-        let task = getSelectedClass();
-        task.setTaskAsPriority();
+        getIndexOfSelectedClass();
+        list[indexInList].setTaskAsPriority();
         reUsableTaskContainer.classList.add('priority');
     }
     );
 
     editButton.addEventListener('click', ()=>{
-        removeSelectedClass();
-        resetTaskDisplay();
         //make reusableTaskContainer "contenteditable='true'"
         //update the object's name, and the display
         //maybe add "double click"(??) event listener to the reusableTaskContainer/
+        reUsableTaskContainer.setAttribute('contenteditable','true');
+        confirmButton.setAttribute('style','display:contents');
+
         });
 
+    confirmButton.addEventListener('click',()=>{
+        resetTodoDisplay();
+        getIndexOfSelectedClass();
+        list[indexInList].setName = reUsableTaskContainer.textContent;
+        generateAllTaskDisplay(list[indexInList]);
+    })
+    
     deleteButton.addEventListener('click', ()=>{
-        let task = getSelectedClass();
+        let task = list[indexInList];
         taskList.deleteTask(task);
         taskList.showList
         listShowCase.removeChild(taskShowCase);
@@ -227,21 +243,17 @@ function generateAllTaskDisplay(task){
 
 }
 
-function getSelectedClass(){ 
+function getIndexOfSelectedClass(){ 
     let list = taskList.fullList;
+    let target = ''
     let selected = document.querySelector(".selected").textContent;
-    console.log(selected);
-    
-    let target = "value";
-    for(i=0;i<list.length;i++){
+        for(i=0;i<list.length;i++){
         if(list[i].taskName === selected){
-        console.log(list[i].taskName);
-        target = list[i];
+            indexInList = i;
+            break;
         }
     }
-    
-    console.log(target);
-    return target;
+
 }
 
 
@@ -295,6 +307,11 @@ function deleteElementByClass(className){
     while(elements.length>0){
         elements[0].parentNode.removeChild(elements[0]);
     }
+}
+
+function resetTodoDisplay(){
+    deleteElementByClass('todos');
+    deleteElementByClass('todo-form');
 }
 
 function resetTaskDisplay(){
