@@ -27,3 +27,6 @@ July 7th 2023:
     -reminder
     -store data: locally & cloud(?)
     -default welcome page everytime the user opens the website
+    -email to remind
+    -port to assign task 
+    

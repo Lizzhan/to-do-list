@@ -1,41 +1,11 @@
 import { List } from './list-class.js';
+import { Task } from './task-class.js';
+
 let taskList = new List('tasklist');
 
 // to run on local server: http-server -c-1 from main directory
 // choose directory containing the html file you want to test
 
-class Task{
-
-    constructor(name){
-        this.name = name;
-        this.todos = [];
-        this.priority = false;
-    }
-
-    set setName(name){
-        this.name = name;
-    }
-
-    setTaskAsPriority(){
-        this.priority = true;
-    }
-
-    get getToDos(){
-        return this.todos;
-    }
-
-    get taskName(){
-        return this.name;
-    }
-    get taskOverview(){
-        console.log(this.todos);
-    }
-
-    addToDos(toDo){
-        this.todos.push(toDo);
-    }
-
-}
 
 
 const displayGeneral = document.querySelector('.display-general');
@@ -49,9 +19,8 @@ const listShowCase = document.querySelector('#list-showcase');
 const resetButton = document.querySelector('#reset-button');
 
 let placeholder = "";
-let untouched = true;
-
 let indexInList = '';
+let untouched = true;
 
 function showNewTaskInput(){
     newButton.addEventListener('click',()=>{
@@ -124,10 +93,10 @@ function generateListButtons(){
     let list = taskList.fullList;
 
     reUsableTaskContainer.addEventListener('click',()=>{
+        if(untouched !== true){
         resetTaskDisplay();
-        if(!untouched){
-        removeSelectedClass();
         }
+        untouched = false;
         taskShowCase.appendChild(editButton);
         taskShowCase.appendChild(deleteButton);     
         taskShowCase.appendChild(setPriority);
@@ -135,9 +104,9 @@ function generateListButtons(){
     })
 
     reUsableTaskContainer.addEventListener('dblclick',()=>{
-        untouched = false;
         reUsableTaskContainer.setAttribute('class','selected');
         getIndexOfSelectedClass();
+        resetTaskDisplay();
         generateAllTaskDisplay(list[indexInList]);   
 
     })
