@@ -10,25 +10,32 @@
         <div class="container">
         <div class="display-general">
             <div class="display-list">
-                <p>List</p>
+                <div class="main-task-list-title">Main Task List</div>
+                <div class="priority-tasks">Priority Tasks</div>
 
-                <button id="new-button">New</button>
-                <button id="reset-button">Reset</button>
-                <div id="new-task">
-                <form>               
-                    <input type="text" id="new-task-input" placeholder="Enter New Task">
-                    <button id="add-new-task">Add To list</button>
-                </form>
+                <div id="list-display">
+                    <div id="list-showcase">
+                        <div class="add-new">
+                            <button id="new-button">New</button>
+
+                            <div id="new-task">
+                                <form>               
+                                    <input type="text" id="new-task-input" placeholder="Enter New Task">
+                                    <button id="add-new-task">Add To list</button>
+                                </form>
+                            </div>
+                        </div> 
+                    </div>   
+                    <button id="reset-button">Clear Display</button>
+     
                 </div>
-                
-                <div id="list-showcase"></div>
             </div>
-            <div class="display-task">
-                <p>Task</p>
-            </div>
+                <div class="display-task">
+                    <div class="task-details-title">Task Details</div>
+                </div>
         </div>
     </body>    
 
-    <script src="main.js" defer></script>
+    <script src="../src/index.js" defer></script>
 
 </html>

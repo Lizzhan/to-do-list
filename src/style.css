@@ -3,6 +3,11 @@
     margin: 0;
     padding: 0;
     text-align: center;
+    font-family: "Farfetch Basis","Helvetica Neue",Arial,sans-serif;
+    font-weight: 700;
+    color: white;
+    background-color: #000000;
+    overflow: auto;
 }
 
 .container{
@@ -13,16 +18,35 @@
 .display-general{
     display: flex;
     width: 1200px;
-    height: 500px;
-    border: solid black 1px;
+    height: 800px;
+    border: solid white 1px;
+    
+}
+
+.main-task-list-title, .task-details-title{
+    padding: 10px;
+    overflow: hidden;
 }
 
 .display-list{
     flex-basis: 40%;
-    border: solid black;
-    border-right: 1px;
+    border: solid white 1px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: 10px;
 }
 
+.priority-tasks{
+    flex-basis: 25%;
+    border-top: solid white 1px;
+    border-bottom: solid white 1px;
+    padding: 10px;
+}
+
+.add-new{
+    flex-basis: 75%;
+}
 .display-task{
     flex-basis: 60%;
     border: solid black ;
@@ -32,10 +56,56 @@
     display: inline-block;
 }
 
-#new-task, .todo-form, .set-priority, .confirm-button{
+#new-task-input{
+    padding: 10px;
+}
+
+#new-task, .todo-form, .confirm-button{
     display: none;
 }
 
 .priority{
     color: red;
+}
+
+.each-task{
+    padding: 10px;
+}
+
+button{
+  background-color: #222;
+  border-radius: 4px;
+  border-style: none;
+  box-sizing: border-box;
+  color: #fff;
+  display: inline-block;
+  font-family: "Farfetch Basis","Helvetica Neue",Arial,sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.5;
+  margin: 0;
+  max-width: none;
+  min-height: 44px;
+  min-width: 10px;
+  outline: none;
+  overflow: hidden;
+  padding: 9px 20px 8px;
+  position: relative;
+  text-align: center;
+  text-transform: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  width: 100%;
+}
+
+.list-buttons{
+    width: 50%;
+}
+
+input{
+    width: 80%;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.5;
 }
