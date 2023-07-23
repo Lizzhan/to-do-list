@@ -70,6 +70,7 @@ let taskList = new List('tasklist');
 
 const displayGeneral = document.querySelector('.display-general');
 const listDisplay = document.querySelector('.display-list');
+const priorityDisplay = document.querySelector('.priority-tasks');
 const taskDisplay = document.querySelector('.display-task');
 const newButton = document.querySelector('#new-button');
 const newTask = document.querySelector('#new-task');
@@ -80,6 +81,7 @@ const resetButton = document.querySelector('#reset-button');
 
 let placeholder = "";
 let indexInList = '';
+
 let isSelected = false;
 
 function showNewTaskInput(){
@@ -196,6 +198,7 @@ function generateListButtons(){
         getIndexOfSelectedClass();
         list[indexInList].setTaskAsPriority();
         reUsableTaskContainer.classList.add('priority');
+
     }
     );
 
@@ -265,6 +268,7 @@ function generateAllTaskDisplay(task){
 
 }
 
+
 function getIndexOfSelectedClass(){ 
     let list = taskList.fullList;
     let selected = document.querySelector(".selected").textContent;
@@ -274,8 +278,8 @@ function getIndexOfSelectedClass(){
             break;
         }
     }
-
 }
+
 
 
 function displayEachTaskDetail(task){
@@ -311,6 +315,7 @@ function displayEachTaskDetail(task){
         confirmChangeButton.addEventListener('click',()=>{
             todos[i] = content.textContent;
             confirmChangeButton.setAttribute('style','display:none');
+
 
         })
 
@@ -355,7 +360,14 @@ function removeSelectedClass(){
     isSelected = false;
 }
 
+function setStorage(){
+    localStorage.setItem("list", JSON.stringify(taskList));
+    console.log(JSON.parse(localStorage.getItem("list")));
+}
 
+function getStorage(){
+    taskList = localStorage.getItem("list");
+}
 
 showNewTaskInput();
 initializeResetButton();
