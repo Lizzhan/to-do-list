@@ -31,4 +31,4 @@ class Task{
 
 }
 
-export { Task };
+export default Task ;

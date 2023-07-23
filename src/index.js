@@ -1,65 +1,16 @@
-class List{
-    constructor(name){
-        this.name = name;
-        this.tasks = [];
-    }
-
-    get showList(){
-        this.tasks.forEach((task)=>{
-            console.log(task);
-        })
-    }
-
-    get fullList(){
-        return this.tasks;
-    }
-
-    get listName(){
-        return this.name;
-    }
-
-    addTask(task){
-        this.tasks.push(task);
-    }
+import List from "./list-class";
+import Task from "./task-class";
+import {    displayGeneral,
+    listDisplay,
+    priorityDisplay,
+    taskDisplay,
+    newButton,
+    newTask,
+    newTaskInput,
+    addNewTaskButton,
+    listShowCase,
+    resetButton} from "./dom";
     
-    deleteTask(task){
-        this.tasks = this.tasks.filter(item => item !== task);
-    }
-
-}
-
-class Task{
-
-    constructor(name){
-        this.name = name;
-        this.todos = [];
-        this.priority = false;
-    }
-
-    set setName(name){
-        this.name = name;
-    }
-
-    setTaskAsPriority(){
-        this.priority = true;
-    }
-
-    get getToDos(){
-        return this.todos;
-    }
-
-    get taskName(){
-        return this.name;
-    }
-    get taskOverview(){
-        console.log(this.todos);
-    }
-
-    addToDos(toDo){
-        this.todos.push(toDo);
-    }
-
-}
 
 let taskList = new List('tasklist');
 
@@ -67,17 +18,6 @@ let taskList = new List('tasklist');
 // choose directory containing the html file you want to test
 
 
-
-const displayGeneral = document.querySelector('.display-general');
-const listDisplay = document.querySelector('.display-list');
-const priorityDisplay = document.querySelector('.priority-tasks');
-const taskDisplay = document.querySelector('.display-task');
-const newButton = document.querySelector('#new-button');
-const newTask = document.querySelector('#new-task');
-const newTaskInput = document.querySelector('#new-task-input');
-const addNewTaskButton = document.querySelector('#add-new-task');
-const listShowCase = document.querySelector('#list-showcase');
-const resetButton = document.querySelector('#reset-button');
 
 let placeholder = "";
 let indexInList = '';
@@ -279,6 +219,7 @@ function getIndexOfSelectedClass(){
         }
     }
 }
+
 
 
 
