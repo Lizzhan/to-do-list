@@ -53,6 +53,7 @@ function addNewTask(){
         const newTask = new Task(placeholder);
         newTask.addToDos("DefaultTest1");
         taskList.addTask(newTask);
+        setStorage();
 
         generateListButtons();
         hideInput();
@@ -138,6 +139,7 @@ function generateListButtons(){
         getIndexOfSelectedClass();
         list[indexInList].setTaskAsPriority();
         reUsableTaskContainer.classList.add('priority');
+        setStorage();
 
     }
     );
@@ -154,6 +156,7 @@ function generateListButtons(){
         list[indexInList].setName = reUsableTaskContainer.textContent;
         generateAllTaskDisplay(list[indexInList]);
         reUsableTaskContainer.setAttribute('contenteditable','false');
+        setStorage();
 
     })
     
@@ -163,7 +166,8 @@ function generateListButtons(){
         taskList.showList
         listShowCase.removeChild(taskShowCase);
         resetTaskDisplay();
-    }
+        setStorage()
+        }
     )
 }
 
@@ -199,6 +203,7 @@ function generateAllTaskDisplay(task){
         deleteElementByClass('todos');
         todoForm.setAttribute('style','display:none');
         newInput.value = "";
+        setStorage();
         displayEachTaskDetail(task);
     })
     
@@ -256,18 +261,26 @@ function displayEachTaskDetail(task){
         confirmChangeButton.addEventListener('click',()=>{
             todos[i] = content.textContent;
             confirmChangeButton.setAttribute('style','display:none');
-
+            setStorage();
 
         })
 
         deleteButton.addEventListener('click',()=>{
             todos.splice(i,1);
             taskDisplay.removeChild(container);
+            setStorage();
         })
     }
 }
 
 //utility functions
+function isListEmpty(){
+    if(taskList.fullList===""){
+        return true;
+    }else{
+        return false;
+    }
+}
 
 function deleteElementByClass(className){
     const elements = document.getElementsByClassName(className);
@@ -302,15 +315,25 @@ function removeSelectedClass(){
 }
 
 function setStorage(){
-    localStorage.setItem("list", JSON.stringify(taskList));
-    console.log(JSON.parse(localStorage.getItem("list")));
+    localStorage.clear();
+    const toString = JSON.stringify(taskList);
+    localStorage.setItem('list', toString);
+    console.log(toString);
 }
 
 function getStorage(){
-    taskList = localStorage.getItem("list");
+    const listIsEmpty = isListEmpty;
+    if(listIsEmpty){
+        return;
+    }else{
+    const toString = localStorage.getItem('list');
+    taskList = JSON.parse(toString);
+    };
 }
 
 showNewTaskInput();
 initializeResetButton();
 addNewTask();
+getStorage();
+generateListButtons();
 
