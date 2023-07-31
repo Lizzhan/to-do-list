@@ -28,6 +28,7 @@ function showNewTaskInput(){
     newButton.addEventListener('click',()=>{
         resetTaskDisplay();
         newTask.setAttribute('style','display:contents')});
+
 }
 
 function initializeResetButton(){
@@ -55,11 +56,10 @@ function addNewTask(){
         taskList.addTask(newTask);
         setStorage();
 
-        generateListButtons();
+        generateListButtons(newTask.taskName);
         hideInput();
 
         console.log(`${placeholder} added`);
-        taskList.showList;
 
         newTaskInput.value = '';
         placeholder = '';
@@ -67,7 +67,13 @@ function addNewTask(){
     })
 }
 
-function generateListButtons(){
+// function updateDisplay(task){
+//     const theTask = task;
+//     const taskName = task.taskName;
+//     generateListButtons(taskName);
+// }
+
+function generateListButtons(taskName){
     const editButton = document.createElement('button');
     editButton.classList.add('list-edit-button');
     editButton.classList.add('list-buttons');
@@ -95,7 +101,7 @@ function generateListButtons(){
 
     const reUsableTaskContainer = document.createElement('p');
     reUsableTaskContainer.classList.add('each-task');
-    reUsableTaskContainer.textContent = placeholder;
+    reUsableTaskContainer.textContent = taskName;
 
     const taskTitle = document.createElement('div');
     taskTitle.classList.add('task-title');
@@ -112,7 +118,7 @@ function generateListButtons(){
     taskShowCase.appendChild(listButtons);
     listShowCase.appendChild(taskShowCase);
 
-    let list = taskList.fullList;
+    let list = taskList.tasks;
 
     reUsableTaskContainer.addEventListener('click',()=>{
         resetTaskDisplay();
@@ -215,7 +221,7 @@ function generateAllTaskDisplay(task){
 
 
 function getIndexOfSelectedClass(){ 
-    let list = taskList.fullList;
+    let list = taskList.tasks;
     let selected = document.querySelector(".selected").textContent;
         for(let i=0;i<list.length;i++){
         if(list[i].taskName === selected){
@@ -275,7 +281,7 @@ function displayEachTaskDetail(task){
 
 //utility functions
 function isListEmpty(){
-    if(taskList.fullList===""){
+    if(taskList.showList===""){
         return true;
     }else{
         return false;
@@ -322,18 +328,26 @@ function setStorage(){
 }
 
 function getStorage(){
-    const listIsEmpty = isListEmpty;
-    if(listIsEmpty){
-        return;
-    }else{
+    // const listIsEmpty = isListEmpty;
+    // console.log(listIsEmpty);
+    // if(listIsEmpty){
+    //     return;
+    // }
     const toString = localStorage.getItem('list');
-    taskList = JSON.parse(toString);
-    };
+    taskList = Object.assign(
+        new List(),
+        JSON.parse(toString)
+        );
+
+    console.log(taskList.fullList);    
+    taskList.tasks = taskList.tasks.map((task)=>{
+        Object.assign(new Task(),task)
+    })
+
 }
 
 showNewTaskInput();
 initializeResetButton();
 addNewTask();
 getStorage();
-generateListButtons();
 

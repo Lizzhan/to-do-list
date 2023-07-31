@@ -9,6 +9,10 @@ const addNewTaskButton = document.querySelector('#add-new-task');
 const listShowCase = document.querySelector('#list-showcase');
 const resetButton = document.querySelector('#reset-button');
 
+
+
+
+
 export {
     displayGeneral,
     listDisplay,
