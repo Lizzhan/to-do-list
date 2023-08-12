@@ -9,7 +9,8 @@ import {    displayGeneral,
     newTaskInput,
     addNewTaskButton,
     listShowCase,
-    resetButton} from "./dom";
+    resetButton,
+    } from "./dom";
     
 
 let taskList = new List('tasklist');
@@ -67,11 +68,11 @@ function addNewTask(){
     })
 }
 
-// function updateDisplay(task){
-//     const theTask = task;
-//     const taskName = task.taskName;
-//     generateListButtons(taskName);
-// }
+function updateDisplay(task){
+    const theTask = task;
+    const taskName = theTask.taskName;
+    generateListButtons(taskName);
+}
 
 function generateListButtons(taskName){
     const editButton = document.createElement('button');
@@ -341,8 +342,11 @@ function getStorage(){
 
     console.log(taskList.fullList);    
     taskList.tasks = taskList.tasks.map((task)=>{
-        Object.assign(new Task(),task)
+        Object.assign(new Task(),task) //task does not become the Task object. And methods of the Task object are not working as a result
+        console.log("The Task: " + task.todos);
+        console.log("Task Name is: " + task.name);
     })
+
 
 }
 
@@ -350,4 +354,5 @@ showNewTaskInput();
 initializeResetButton();
 addNewTask();
 getStorage();
+
 

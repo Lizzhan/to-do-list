@@ -13,4 +13,5 @@
     f. due date reminder everytime the user opens the page
     G. save tasks to local
 
-
+8/12:
+    a. setStroage: after the page is refreshed, why is the value displayed as "[null, [key]]??

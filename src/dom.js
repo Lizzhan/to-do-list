@@ -9,7 +9,24 @@ const addNewTaskButton = document.querySelector('#add-new-task');
 const listShowCase = document.querySelector('#list-showcase');
 const resetButton = document.querySelector('#reset-button');
 
+let isSelected = false;
 
+function showNewTaskInput(){
+    newButton.addEventListener('click',()=>{
+        resetTaskDisplay();
+        newTask.setAttribute('style','display:contents')});
+
+}
+
+function initializeResetButton(){
+    resetButton.addEventListener('click',()=>{
+        resetTaskDisplay();
+        if(isSelected===true){
+        removeSelectedClass();
+        }
+    }
+    )
+}
 
 
 
@@ -23,5 +40,8 @@ export {
     newTaskInput,
     addNewTaskButton,
     listShowCase,
-    resetButton
+    resetButton,
+    showNewTaskInput,
+    initializeResetButton,
+    isSelected,
 }
