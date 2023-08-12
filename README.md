@@ -14,4 +14,5 @@
     G. save tasks to local
 
 8/12:
-    a. setStroage: after the page is refreshed, why is the value displayed as "[null, [key]]??
+    a. setStroage: when the page is refreshed, data stored prior to this fresh is stored as "nulls" instead of as the task objects with the properties"
+    
