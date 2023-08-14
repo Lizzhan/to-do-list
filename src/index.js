@@ -54,7 +54,7 @@ function addNewTask(){
         taskList.addTask(newTask);
         setStorage();
 
-        generateListButtons(newTask.taskName);
+        generateListButtons(newTask);
         hideInput();
 
         console.log(`${placeholder} added`);
@@ -65,13 +65,13 @@ function addNewTask(){
     })
 }
 
-function updateDisplay(task){
-    const theTask = task;
-    const taskName = theTask.taskName;
-    generateListButtons(taskName);
+function updateDisplay(tasks){
+    tasks.forEach((task)=>{
+        generateListButtons(task);
+    });
 }
 
-function generateListButtons(taskName){
+function generateListButtons(task){
     const editButton = document.createElement('button');
     editButton.classList.add('list-edit-button');
     editButton.classList.add('list-buttons');
@@ -99,7 +99,7 @@ function generateListButtons(taskName){
 
     const reUsableTaskContainer = document.createElement('p');
     reUsableTaskContainer.classList.add('each-task');
-    reUsableTaskContainer.textContent = taskName;
+    reUsableTaskContainer.textContent = task.name;
 
     const taskTitle = document.createElement('div');
     taskTitle.classList.add('task-title');
@@ -206,7 +206,7 @@ function generateAllTaskDisplay(task){
 
     submitTodoBtn.addEventListener('click',(e)=>{
         e.preventDefault();
-        task.addToDos(newInput.value);
+        task.todos.push(newInput.value);
         deleteElementByClass('todos');
         todoForm.setAttribute('style','display:none');
         newInput.value = "";
@@ -225,9 +225,10 @@ function getIndexOfSelectedClass(){
     let list = taskList.tasks;
     let selected = document.querySelector(".selected").textContent;
         for(let i=0;i<list.length;i++){
-        if(list[i].taskName === selected){
+        if(list[i].name === selected){
             indexInList = i;
-            break;removeSelected
+            console.log("index found")
+            break;
         }
     }
 }
@@ -236,7 +237,7 @@ function getIndexOfSelectedClass(){
 
 
 function displayEachTaskDetail(task){
-    let todos = task.getToDos;
+    let todos = task.todos;
 
     for(let i = 0; i < todos.length; i++){
         const container = document.createElement('div');
@@ -343,12 +344,13 @@ function getStorage(){
 
     console.log(taskList.tasks);
     taskList.tasks.forEach((task)=>{
-        console.log("The Task: " + task.todos);
         console.log("Task Name is: " + task.name);
+        console.log("Todos: " + task.todos);
     });
 }
 
 getStorage();
+updateDisplay(taskList.tasks);
 showNewTaskInput();
 initializeResetButton();
 addNewTask();

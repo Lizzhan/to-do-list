@@ -14,5 +14,7 @@
     G. save tasks to local
 
 8/12:
-    a. setStroage: when the page is refreshed, data stored prior to this fresh is stored as "nulls" instead of as the task objects with the properties"
+    <!-- a. setStroage: when the page is refreshed, data stored prior to this fresh is stored as "nulls" instead of as the task objects with the properties" -->
     
+8/13
+    JSON: change List and Task class's functions into strings 
