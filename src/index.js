@@ -18,11 +18,8 @@ let taskList = new List('tasklist');
 // to run on local server: http-server -c-1 from main directory
 // choose directory containing the html file you want to test
 
-
-
 let placeholder = "";
 let indexInList = '';
-
 let isSelected = false;
 
 function showNewTaskInput(){
@@ -123,6 +120,9 @@ function generateListButtons(taskName){
 
     reUsableTaskContainer.addEventListener('click',()=>{
         resetTaskDisplay();
+        if(isSelected){
+        removeSelectedClass();
+        };
         isSelected = true;
         reUsableTaskContainer.classList.add('selected');
         getIndexOfSelectedClass();
@@ -227,7 +227,7 @@ function getIndexOfSelectedClass(){
         for(let i=0;i<list.length;i++){
         if(list[i].taskName === selected){
             indexInList = i;
-            break;
+            break;removeSelected
         }
     }
 }
@@ -323,6 +323,7 @@ function removeSelectedClass(){
 
 function setStorage(){
     localStorage.clear();
+    console.log(taskList.tasks);
     const toString = JSON.stringify(taskList);
     localStorage.setItem('list', toString);
     console.log(toString);
@@ -340,19 +341,17 @@ function getStorage(){
         JSON.parse(toString)
         );
 
-    console.log(taskList.fullList);    
-    taskList.tasks = taskList.tasks.map((task)=>{
-        Object.assign(new Task(),task) //task does not become the Task object. And methods of the Task object are not working as a result
+    console.log(taskList.tasks);
+    taskList.tasks.forEach((task)=>{
         console.log("The Task: " + task.todos);
         console.log("Task Name is: " + task.name);
-    })
-
-
+    });
 }
 
+getStorage();
 showNewTaskInput();
 initializeResetButton();
 addNewTask();
-getStorage();
+
 
 
