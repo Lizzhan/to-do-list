@@ -18,3 +18,8 @@
     
 8/13
     JSON: change List and Task class's functions into strings 
+    debugging: what is a better way than using console.log() commands?
+    Next:
+        a. add date&reminder functionality
+        b. display priority tasks
+        c. Todos UI improvement

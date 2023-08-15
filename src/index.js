@@ -153,13 +153,15 @@ function generateListButtons(task){
 
     editButton.addEventListener('click', ()=>{
         reUsableTaskContainer.setAttribute('contenteditable','true');
-        confirmButton.setAttribute('style','display:contents');
-
+        // confirmButton.setAttribute('style','display:contents');
+        confirmButton.classList.remove('confirm-button-hide');
+        confirmButton.classList.add('confirm-button-display');
         });
 
     confirmButton.addEventListener('click',()=>{
         resetTodoDisplay();
-        confirmButton.setAttribute('style','display:none'); 
+        confirmButton.classList.remove('confirm-button-display');
+        confirmButton.classList.add('confirm-button-hide');
         list[indexInList].setName = reUsableTaskContainer.textContent;
         generateAllTaskDisplay(list[indexInList]);
         reUsableTaskContainer.setAttribute('contenteditable','false');
@@ -243,32 +245,47 @@ function displayEachTaskDetail(task){
         const container = document.createElement('div');
         container.classList.add('todos');
 
+        const buttonContainer = document.createElement('div');
+        buttonContainer.classList.add('button-container');
+        buttonContainer.setAttribute('style','display:none');
+
         const content = document.createElement('ul');
+        content.classList.add('each-todo')
         content.textContent = todos[i];
         
         const editButton = document.createElement('button');
         editButton.textContent = "Edit";
+        editButton.classList.add('todo-buttons');
 
         const deleteButton = document.createElement('button');
         deleteButton.textContent = "Delete";
+        deleteButton.classList.add('todo-buttons');
 
         const confirmChangeButton = document.createElement('button');
         confirmChangeButton.classList.add('confirm-button');
         confirmChangeButton.textContent = "confirm";
+
         taskDisplay.appendChild(container);
         container.appendChild(content);
-        container.appendChild(confirmChangeButton);
-        container.appendChild(editButton);
-        container.appendChild(deleteButton);
+        container.appendChild(buttonContainer);
+        buttonContainer.appendChild(confirmChangeButton);
+        buttonContainer.appendChild(editButton);
+        buttonContainer.appendChild(deleteButton);
+
+        content.addEventListener('click',()=>{
+            buttonContainer.setAttribute('style','display:contents');
+        });
 
         editButton.addEventListener('click',()=>{
             content.setAttribute('contenteditable','true');
-            confirmChangeButton.setAttribute('style','display:contents');
+            confirmChangeButton.classList.add('confirm-button-display');
+
         });
 
         confirmChangeButton.addEventListener('click',()=>{
             todos[i] = content.textContent;
-            confirmChangeButton.setAttribute('style','display:none');
+            confirmChangeButton.classList.remove('confirm-button-display');
+            confirmChangeButton.classList.add('confirm-button-hide');
             setStorage();
 
         })
